@@ -3,10 +3,9 @@
 | รายการ | ข้อมูล |
 |---|---|
 | รายวิชา | ENGSE203 การเขียนโปรแกรมสำหรับวิศวกรซอฟต์แวร์ |
-| รหัสนักศึกษา | STUDENT-ID |
-| ชื่อ-นามสกุล | ชื่อ-นามสกุล |
-| Section | SEC-X |
-| GitHub Username | GITHUB-USERNAME |
-| Repository | `engse203-student-labs-STUDENT-ID` |
-
-> ไฟล์นี้จะถูกปรับข้อมูลเมื่อรัน `npm run setup`
+| รหัสนักศึกษา | 68543210026 |
+| ชื่อ-นามสกุล | ธนกร กองใจ |
+| Section | SEC1 |
+| GitHub Username | waBenford |
+| Repository | `engse203-student-labs-68543210026` |
+| Pages Hub | https://waBenford.github.io/engse203-student-labs-68543210026/ |
