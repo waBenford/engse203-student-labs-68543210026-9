@@ -38,6 +38,10 @@ Testcase 12
 ![alt text](image-1.png)
 ![alt text](image-2.png)
 - ภาพ validation, success/empty state
+![alt text](image-20.png)
+![alt text](image-21.png)
+![alt text](image-22.png)
 - Reflection: State ownership, Props และ callback
+App ทำหน้าที่เป็น State owner เก็บข้อมูลหลักทั้งหมด โดยจะส่งข้อมูลผ่าน Props ลงไปให้ component ย่อยแสดงผล และส่งฟังก์ชันเป็น callback ให้ component ย่อยเรียกใช้เพื่ออัปเดต State กลับมาที่ App
 - PR URL และ Pages URL
 https://github.com/waBenford/engse203-student-labs-68543210026-9/pull/6
