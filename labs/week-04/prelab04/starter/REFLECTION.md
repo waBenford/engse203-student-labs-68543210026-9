@@ -1,7 +1,7 @@
 # Pre-LAB 04 Reflection — CP07
 
-ชื่อ–นามสกุล: นายธนกร กองใจ
-รหัสนักศึกษา: 68543210026-9
+ชื่อ–นามสกุล:  
+รหัสนักศึกษา:  
 
 1. Component ใดเป็น state owner ของ tasks และ statusFilter เพราะเหตุใด?
 
@@ -22,3 +22,4 @@
          validation เพิ่มการเช็คข้อมูลในฟอร์ม (Local State) ต้องกรอกให้ครบถ้วนก่อนทำการ Submit
          
          component responsibility แยกหน้าที่ชัดเจน App คุม State หลักและลอจิก ส่วน Component อื่นๆ ทำหน้าที่แค่รับ Props ไปแสดงผลและส่ง Event กลับ
+

@@ -1,13 +1,13 @@
 const filters = [
   ['all', 'ทั้งหมด'],
-  ['pending', 'รอดำเนินการ'],
-  ['in-progress', 'กำลังดำเนินการ'],
-  ['completed', 'เสร็จสิ้น'],
+  ['todo', 'ต้องทำ'],
+  ['doing', 'กำลังทำ'],
+  ['done', 'เสร็จแล้ว'],
 ];
 
 function FilterBar({ value, onFilterChange }) {
   return (
-    <div className="filter-bar" role="group" aria-label="กรองสถานะคำร้อง">
+    <div className="filter-bar" role="group" aria-label="กรองสถานะงาน">
       {filters.map(([filterValue, label]) => (
         <button
           className={value === filterValue ? 'filter-active' : 'filter-button'}
