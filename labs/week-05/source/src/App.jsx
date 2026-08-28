@@ -11,10 +11,10 @@ function App() {
     <Routes>
       <Route element={<AppLayout />}>
         <Route index element={<DashboardPage />} />
-        <Route element={<AboutPage />} path="/about" />
+        <Route element={<AboutPage />} path="about" />
         <Route element={<NotFoundPage />} path="*" />
-        <Route element={<RequestDetailPage />} path="/requests/:requestId" />
-        <Route element={<NewRequestPage />} path="/requests/new" />
+        <Route element={<RequestDetailPage />} path="requests/:requestId" />
+        <Route element={<NewRequestPage />} path="requests/new" />
       </Route>
     </Routes>
   );

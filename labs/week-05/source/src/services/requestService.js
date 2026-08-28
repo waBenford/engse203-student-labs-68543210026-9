@@ -49,9 +49,7 @@ async function waitForLabDelay() {
 // TODO 5A-1 → เขียนตัวฟังก์ชันแทนบรรทัด throw
 async function fetchSeedRequests() {
   const baseUrl = import.meta.env?.BASE_URL ?? '/';
-
-  console.log('fetchSeedRequests() baseUrl =', baseUrl);
-
+  //console.log('fetchSeedRequests() baseUrl =', baseUrl);
   const response = await fetch(`${baseUrl}data/initialRequests.json`);
   if (!response.ok) throw new Error('ไม่สามารถโหลดข้อมูลตัวอย่างได้');
   return structuredClone(await response.json());
@@ -90,8 +88,9 @@ export async function getRequests(options = {}) {
  * เพราะ "หาไม่เจอ" ไม่ใช่ความผิดพลาดของระบบ
  */
 export async function getRequestById(requestId) {
-  void requestId;
-  throw new Error('TODO 5A-3: getRequestById');
+  const requests = await getRequests();
+  const request = requests.find((req) => req.id === requestId);
+  return request || null;
 }
 
 /* ─────────── คาบ 5B ─────────── */
