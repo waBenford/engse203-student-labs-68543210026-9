@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import PriorityBadge from './PriorityBadge';
 
 function RequestCard({ request, onDeleteRequest, onMarkDone }) {
   return (
@@ -9,7 +10,7 @@ function RequestCard({ request, onDeleteRequest, onMarkDone }) {
         <p>{request.location}</p>
         <p>{request.details}</p>
         {/* TODO B4: แทน {request.priority} ด้านล่างด้วย <PriorityBadge priority={request.priority} /> ที่คุณสร้าง */}
-        <p><span className={`badge ${request.status}`}>{request.status}</span> · {request.priority}</p>
+        <p><span className={`badge ${request.status}`}>{request.status}</span> · <PriorityBadge priority={request.priority} /></p>
       </div>
       {request.status !== 'completed' && (
         <button type="button" className="button" onClick={() => onMarkDone(request.id)}>
