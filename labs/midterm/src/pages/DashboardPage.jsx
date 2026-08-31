@@ -111,7 +111,11 @@ function DashboardPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             {/* TODO B3: เพิ่ม onMarkDone={handleMarkDone} และเขียน handleMarkDone ให้เรียก updateRequestStatus แล้ว setRequests เพื่อให้ summary อัปเดต + รอด refresh */}
-            <RequestList requests={filteredRequests} onDeleteRequest={handleDelete} />
+            {filteredRequests.length > 0 ? (
+              <RequestList requests={filteredRequests} onDeleteRequest={handleDelete} />
+            ) : (
+              <p>ไม่พบคำร้องที่ตรงกับการค้นหา</p>
+            )}
           </section>
         </>
       )}
