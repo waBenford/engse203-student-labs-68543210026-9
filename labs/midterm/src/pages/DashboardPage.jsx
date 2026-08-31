@@ -50,9 +50,12 @@ function DashboardPage() {
   }), [requests]);
 
   const filteredRequests = requests.filter((request) => {
+    const matchStatus = statusFilter === 'all' || request.status === statusFilter;
     const searchLower = searchQuery.toLowerCase();
-    return request.requesterName.toLowerCase().includes(searchLower) ||
-           request.details.toLowerCase().includes(searchLower);
+    const matchSearch = request.requesterName.toLowerCase().includes(searchLower) ||
+                        request.details.toLowerCase().includes(searchLower);
+
+    return matchStatus && matchSearch;
   });
 
   function handleRetry() {
