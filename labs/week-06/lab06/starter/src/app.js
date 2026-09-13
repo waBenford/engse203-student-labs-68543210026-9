@@ -40,6 +40,8 @@ export function createApp() {
    * TODO W06-A4 (🏠 CP07) · ปิดท้ายด้วย notFound แล้วตามด้วย errorHandler
    * ⚠ สองตัวนี้ต้องอยู่ท้ายสุด หลัง route ทั้งหมด
    */
+  app.use(notFound);        // ต้องอยู่หลัง route ทั้งหมด
+  app.use(errorHandler);    // ต้องอยู่ท้ายสุดเสมอ
 
   return app;
 }

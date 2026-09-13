@@ -55,13 +55,13 @@ In-Class เราทำให้ API **ทำงานได้** · Take-Home 
 
 เปิด `src/services/requestService.js` แล้วค้นหาคำว่า `req` และ `res`
 
-- [ ] **ต้องไม่เจอเลย** — ถ้าเจอแปลว่า service รู้จัก HTTP ซึ่งผิดหลักการ
-- [ ] ทุกฟังก์ชันใน service คืนข้อมูลหรือ `null`/`true`/`false` — ไม่ส่ง response เอง
+- [x] **ต้องไม่เจอเลย** — ถ้าเจอแปลว่า service รู้จัก HTTP ซึ่งผิดหลักการ
+- [x] ทุกฟังก์ชันใน service คืนข้อมูลหรือ `null`/`true`/`false` — ไม่ส่ง response เอง
 
 เปิด `src/controllers/requestController.js`
 
-- [ ] ไม่มีการเข้าถึงตัวแปร `requests` โดยตรง — ต้องผ่าน `service.` เท่านั้น
-- [ ] ทุกฟังก์ชันจบด้วยการส่ง response (`res.json()` หรือ `res.status().end()`)
+- [x] ไม่มีการเข้าถึงตัวแปร `requests` โดยตรง — ต้องผ่าน `service.` เท่านั้น
+- [x] ทุกฟังก์ชันจบด้วยการส่ง response (`res.json()` หรือ `res.status().end()`)
 
 ## ⚠ ทำไมเรื่องนี้สำคัญ
 
@@ -73,9 +73,9 @@ In-Class เราทำให้ API **ทำงานได้** · Take-Home 
 
 ### ✓ ผ่าน CP06 เมื่อ
 
-- [ ] ค้นหา `req` / `res` ใน `services/` แล้วไม่เจอ
-- [ ] controller ไม่แตะข้อมูลโดยตรง
-- [ ] `npm run check` ยังผ่านเท่าเดิม (การแยกชั้นไม่ทำให้พฤติกรรมเปลี่ยน)
+- [x] ค้นหา `req` / `res` ใน `services/` แล้วไม่เจอ
+- [x] controller ไม่แตะข้อมูลโดยตรง
+- [x] `npm run check` ยังผ่านเท่าเดิม (การแยกชั้นไม่ทำให้พฤติกรรมเปลี่ยน)
 
 ---
 
@@ -149,8 +149,8 @@ app.use(errorHandler);    // ต้องอยู่ท้ายสุดเส
 
 ### ✓ ผ่าน CP07 เมื่อ
 
-- [ ] path ที่ไม่มี → 404 พร้อม JSON (ไม่ใช่หน้า HTML ของ Express)
-- [ ] `npm run check` ผ่านส่วน 🏠 ที่บ้าน **2/2**
+- [x] path ที่ไม่มี → 404 พร้อม JSON (ไม่ใช่หน้า HTML ของ Express)
+- [x] `npm run check` ผ่านส่วน 🏠 ที่บ้าน **2/2**
 
 ---
 

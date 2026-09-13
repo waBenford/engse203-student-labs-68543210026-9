@@ -34,8 +34,8 @@ export function getRequest(req, res) {
  * - เรียก service.create() แล้วตอบ 201 พร้อมคำร้องที่สร้าง
  * ⚠ POST สำเร็จตอบ 201 ไม่ใช่ 200
  */
-export function createRequest(req, res) {
-  const created = service.create(req.body);
+export async function createRequest(req, res) {
+  const created = await service.create(req.body);
   res.status(201).json(created);
 }
 
@@ -44,16 +44,33 @@ export function createRequest(req, res) {
  * - status ที่รับได้: 'pending' | 'in-progress' | 'completed'
  * - status ไม่ถูกต้อง → 400 · ไม่พบคำร้อง → 404 · สำเร็จ → 200
  */
-export function updateRequestStatus(req, res) {
-  throw new Error('TODO W06-C4: updateRequestStatus');
+export async function updateRequestStatus(req, res) {
+  const { status } = req.body;
+  const validStatuses = ['pending', 'in-progress', 'completed'];
+
+  // เช็คว่า status อยู่ใน 3 ค่าที่ยอมรับไหม
+  if (!validStatuses.includes(status)) {
+    return res.status(400).json({ error: 'สถานะไม่ถูกต้อง' });
+  }
+
+  // เรียก service (อย่าลืม await เพราะ service เป็น async แล้ว)
+  const updated = await service.updateStatus(req.params.id, status);
+
+  // ถ้าไม่พบคำร้องรหัสนั้น
+  if (!updated) {
+    return res.status(404).json({ error: `ไม่พบคำร้องรหัส ${req.params.id}` });
+  }
+
+  // เปลี่ยนสำเร็จ
+  res.status(200).json(updated);
 }
 
 /**
  * TODO W06-C5 (CP05) · DELETE /api/requests/:id
  * - ไม่พบ → 404 · ลบสำเร็จ → 204 (ไม่มีข้อมูลส่งกลับ ใช้ res.status(204).end())
  */
-export function deleteRequest(req, res) {
-  const removed = service.remove(req.params.id);
+export async function deleteRequest(req, res) {
+  const removed = await service.remove(req.params.id);
   if (!removed) {
     return res.status(404).json({ error: `ไม่พบคำร้องรหัส ${req.params.id}` });
   }
