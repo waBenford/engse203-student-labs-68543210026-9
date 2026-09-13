@@ -74,22 +74,22 @@
     "pageUrl": "https://waBenford.github.io/engse203-student-labs-68543210026/labs/week-05/",
     "sourceUrl": "https://github.com/waBenford/engse203-student-labs-68543210026/tree/lab/week-05/labs/week-05/source",
     "hasPublish": true,
-    "sourceEntries": 11
+    "sourceEntries": 10
   },
   {
     "week": "week-06",
     "title": "Node.js / Express API Foundation",
-    "status": "ready",
+    "status": "submitted",
     "sourceOrigin": "starter",
     "originalRepoUrl": "https://github.com/waBenford/engse203-student-labs-68543210026-9",
     "originalCommit": "81b9508",
-    "pullRequestUrl": "https://github.com/waBenford/engse203-student-labs-68543210026-9/pull/12",
+    "pullRequestUrl": "https://github.com/waBenford/engse203-student-labs-68543210026-9/pull/13",
     "submissionTag": "lab-06-submission-v1",
     "testStatus": "pass",
     "notes": "ทำ CRUD API, เซฟข้อมูลลงไฟล์ และ Challenge เสร็จครบถ้วน",
     "pageUrl": "https://waBenford.github.io/engse203-student-labs-68543210026/labs/week-06/",
     "sourceUrl": "https://github.com/waBenford/engse203-student-labs-68543210026/tree/lab/week-06/labs/week-06/source",
     "hasPublish": false,
-    "sourceEntries": 9
+    "sourceEntries": 8
   }
 ]
