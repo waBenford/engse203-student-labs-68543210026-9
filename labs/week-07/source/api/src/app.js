@@ -1,4 +1,5 @@
 import cors from 'cors';
+import morgan from 'morgan';
 import express from 'express';
 import { config } from './config.js';
 import requestRoutes from './routes/requestRoutes.js';
@@ -6,6 +7,7 @@ import { errorHandler, notFound } from './middleware/errorHandler.js';
 
 export function createApp() {
   const app = express();
+  app.use(morgan(config.isProduction ? 'combined' : 'dev'));
 
   /**
    * TODO W07-A1 (CP10) · เปิด CORS

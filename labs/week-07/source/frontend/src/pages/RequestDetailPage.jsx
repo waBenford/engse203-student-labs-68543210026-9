@@ -5,6 +5,18 @@ import LoadingState from '../components/LoadingState.jsx';
 import useManualReload from '../hooks/useManualReload.js';
 import { getRequestById } from '../services/requestService.js';
 
+async function handleChangeStatus(nextStatus) {
+  setUpdating(true);
+  try {
+    const updated = await updateRequestStatus(request.id, nextStatus);
+    setRequest(updated);
+  } catch (error) {
+    setError(error.message);
+  } finally {
+    setUpdating(false);
+  }
+}
+
 function RequestDetailPage() {
   const { requestId } = useParams();
   const [loadState, setLoadState] = useState('loading');

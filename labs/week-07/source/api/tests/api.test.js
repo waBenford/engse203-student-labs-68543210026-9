@@ -33,9 +33,57 @@ const validRequest = {
  * ตัวอย่างโครง (ลบคอมเมนต์นี้แล้วเขียนจริง)
  */
 describe('GET /api/requests', () => {
-  test('คืนรายการทั้งหมด พร้อม status 200', async () => {
-    // const res = await request(app).get('/api/requests');
-    // assert.equal(res.status, 200);
-    assert.ok(true, 'ยังไม่ได้เขียน test — ดู TODO W07-TEST');
+  test('คืนรายการทั้งหมด พร้อม status 200 และเป็น array', async () => {
+    const res = await request(app).get('/api/requests');
+    assert.equal(res.status, 200);
+    assert.ok(Array.isArray(res.body));
+  });
+});
+
+describe('GET /api/requests/:id (กรณีพบข้อมูล)', () => {
+  test('ค้นหาคำร้องเจอ คืน status 200', async () => {
+    const res = await request(app).get('/api/requests/REQ-001');
+    assert.equal(res.status, 200);
+    assert.equal(res.body.id, 'REQ-001');
+  });
+});
+
+describe('GET /api/requests/:id (กรณีไม่พบข้อมูล)', () => {
+  test('ค้นหาคำร้องไม่เจอ คืน status 404', async () => {
+    const res = await request(app).get('/api/requests/REQ-999');
+    assert.equal(res.status, 404);
+  });
+});
+
+describe('POST /api/requests (ข้อมูลถูกต้อง)', () => {
+  test('สร้างคำร้องสำเร็จ คืน 201 และ status เป็น pending', async () => {
+    const res = await request(app)
+      .post('/api/requests')
+      .send(validRequest);
+      
+    assert.equal(res.status, 201);
+    assert.equal(res.body.status, 'pending');
+  });
+});
+
+describe('POST /api/requests (ข้อมูลไม่ครบ)', () => {
+  test('ส่งข้อมูลไม่ครบ คืน status 400', async () => {
+    const invalidRequest = { ...validRequest, requesterName: '' };
+    
+    const res = await request(app)
+      .post('/api/requests')
+      .send(invalidRequest);
+      
+    assert.equal(res.status, 400);
+  });
+});
+
+describe('CORS Header', () => {
+  test('ตอบ origin ที่อนุญาตกลับมาใน header', async () => {
+    const res = await request(app)
+      .get('/api/requests')
+      .set('Origin', 'http://localhost:5173'); 
+      
+    assert.equal(res.headers['access-control-allow-origin'], 'http://localhost:5173');
   });
 });
