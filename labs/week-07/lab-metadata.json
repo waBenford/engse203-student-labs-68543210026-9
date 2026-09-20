@@ -1,11 +1,11 @@
 {
   "week": "week-07",
   "title": "Validation, Error Handling, CORS, Config & Front-to-Back Integration",
-  "status": "Ready for submission",
+  "status": "submitted",
   "sourceOrigin": "starter",
   "originalRepoUrl": "https://github.com/waBenford/engse203-student-labs-68543210026-9",
-  "originalCommit": "81b9508",
-  "pullRequestUrl": "https://github.com/waBenford/engse203-student-labs-68543210026-9/pull/13",
+  "originalCommit": "25ff083",
+  "pullRequestUrl": "https://github.com/waBenford/engse203-student-labs-68543210026-9/pull/15",
   "submissionTag": "lab-07-submission-v1",
   "testStatus": "pass",
   "notes": "จัดการ Error Handling, ตั้งค่า CORS กับ .env, ทำ API Contract, เขียน Automated Test และทำ Challenge เสร็จครบถ้วน"
