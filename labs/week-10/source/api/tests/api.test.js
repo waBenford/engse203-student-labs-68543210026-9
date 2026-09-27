@@ -87,3 +87,27 @@ describe('CORS Header', () => {
     assert.equal(res.headers['access-control-allow-origin'], 'http://localhost:5173');
   });
 });
+
+describe('Database integration และ Security', () => {
+  test('คืน requesterName ไม่ใช่ requester_id', async () => {
+    const res = await request(app).get('/api/requests');
+
+    assert.equal(res.status, 200);
+    assert.ok(Array.isArray(res.body));
+    assert.ok(res.body.length > 0);
+
+    assert.ok('requesterName' in res.body[0]);
+    assert.ok(!('requester_id' in res.body[0]));
+  });
+
+  test('SQL injection ผ่าน ?status= ไม่หลุด', async () => {
+    const evil = encodeURIComponent("x' OR '1'='1");
+
+    const res = await request(app)
+      .get(`/api/requests?status=${evil}`);
+
+    assert.equal(res.status, 200);
+    assert.ok(Array.isArray(res.body));
+    assert.equal(res.body.length, 0);
+  });
+});
