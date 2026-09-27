@@ -5,7 +5,7 @@
   "sourceOrigin": "starter week-09",
   "originalRepoUrl": "https://github.com/waBenford/engse203-student-labs-68543210026-9",
   "originalCommit": "f9499de",
-  "pullRequestUrl": "https://github.com/waBenford/engse203-student-labs-68543210026-9/pull/16",
+  "pullRequestUrl": "https://github.com/waBenford/engse203-student-labs-68543210026-9/pull/17",
   "submissionTag": "lab-09-submission-v1",
   "testStatus": "pass",
   "notes": "ทำตามโจทย์ครบถ้วน, แก้ไข schema.sql ให้รันซ้ำได้, และเขียน query SQL ให้ถูกต้องตามโจทย์"
