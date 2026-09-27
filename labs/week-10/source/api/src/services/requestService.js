@@ -7,10 +7,12 @@ import { DatabaseSync } from 'node:sqlite';
 
 import { readFileSync } from 'node:fs';
 
+import { AppError } from '../middleware/errorHandler.js';
+
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const API_ROOT = path.resolve(HERE, '../..');
 const DB_FILE = process.env.DB_FILE ?? path.join(API_ROOT, 'data', 'campus.db');
-//const SCHEMA_FILE = path.join(API_ROOT, 'data', 'schema.sql');
+const SCHEMA_FILE = path.join(API_ROOT, 'data', 'schema.sql');
 
 const db = new DatabaseSync(DB_FILE);
 db.exec('PRAGMA foreign_keys = ON');
@@ -108,25 +110,33 @@ function nextId() {
 }
 
 export function create(input) {
-  /**
-   * TODO W10-5 (CP29) · INSERT ลงฐานข้อมูล
-   *   ⚠ frontend ส่ง requesterName (ชื่อ) มา แต่ตารางเก็บ requester_id (ตัวเลข)
-   *   → ต้องหา id ของชื่อนั้นก่อน ถ้ายังไม่มีในระบบให้สร้าง user ใหม่
-   *   นี่คือ "หน้าที่ของ service" ที่พูดถึงในบทที่ 9 ของสัปดาห์ที่แล้ว
-   */
   const id = nextId();
-  db.prepare(
-    `INSERT INTO requests (id, requester_id, request_type, location, details, priority)
-     VALUES (?, ?, ?, ?, ?, ?)`
-  ).run(
-    id,
-    resolveUserId(input.requesterName.trim()),   // ← แปลงตรงนี้
-    input.requestType,
-    input.location.trim(),
-    input.details.trim(),
-    input.priority ?? 'normal'
-  );
-  return findById(id);   // คืนรูปแบบที่ frontend ต้องการ
+  db.exec('BEGIN'); // เริ่ม Transaction
+  
+  try {
+    // ดึง/สร้าง id ของ user ออกมาก่อน
+    const requesterId = resolveUserId(input.requesterName.trim());
+
+    // นำ id ที่ได้ไป insert ลง requests
+    db.prepare(
+      `INSERT INTO requests (id, requester_id, request_type, location, details, priority)
+       VALUES (?, ?, ?, ?, ?, ?)`
+    ).run(
+      id,
+      requesterId,
+      input.requestType,
+      input.location.trim(),
+      input.details.trim(),
+      input.priority ?? 'normal'
+    );
+
+    db.exec('COMMIT'); // สำเร็จทั้งคู่ บันทึกลงฐานข้อมูลจริง
+    return findById(id);
+    
+  } catch (err) {
+    db.exec('ROLLBACK'); // มีปัญหา ย้อนคืนข้อมูลทั้งหมด (User ใหม่จะไม่ถูกสร้าง)
+    throw toAppError(err); // โยน error กลับไปให้ errorHandler ตัวเดิมจัดการ
+  }
 }
 
 export function updateStatus(id, status) {
@@ -140,4 +150,12 @@ export function remove(id) {
   if (!target) return null;         // ② ไม่พบ → null
   db.prepare('DELETE FROM requests WHERE id = ?').run(id);
   return target;                    // ③ คืนของที่ลบ
+}
+
+function toAppError(err) {
+  const m = err.message ?? '';
+  if (m.includes('FOREIGN KEY')) return new AppError('อ้างถึงข้อมูลที่ไม่มีอยู่จริง', 400);
+  if (m.includes('CHECK'))       return new AppError('ค่าที่ส่งมาไม่อยู่ในรายการที่กำหนด', 400);
+  if (m.includes('UNIQUE'))      return new AppError('ข้อมูลนี้มีอยู่แล้วในระบบ', 409);
+  return err;   // error อื่นปล่อยผ่าน → errorHandler ตอบ 500
 }
