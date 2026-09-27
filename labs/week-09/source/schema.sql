@@ -9,16 +9,9 @@
 
 PRAGMA foreign_keys = ON;
 
--- TODO ①  ลบตารางเดิมก่อน เพื่อให้รันไฟล์นี้ซ้ำได้
---         ⚠ ลำดับสำคัญ — ต้องลบตารางที่มี foreign key ก่อน
---         คำใบ้: DROP TABLE IF EXISTS ...
+DROP TABLE IF EXISTS requests;
+DROP TABLE IF EXISTS users;
 
-
--- TODO ②  สร้างตาราง users
---         ต้องมี: id (PK, INTEGER, AUTOINCREMENT)
---                name (TEXT, ห้ามว่าง)
---                department (TEXT, ห้ามว่าง)
---                email (TEXT, ห้ามว่าง, ห้ามซ้ำ)
 CREATE TABLE users (
   id          INTEGER PRIMARY KEY AUTOINCREMENT,
   name        TEXT NOT NULL,
@@ -26,16 +19,6 @@ CREATE TABLE users (
   email       TEXT NOT NULL UNIQUE
 );
 
--- TODO ③  สร้างตาราง requests
---         ต้องมี: id (PK, TEXT — ใช้รหัสแบบ REQ-001)
---                requester_id (INTEGER, ห้ามว่าง, ชี้ไป users(id))
---                request_type (TEXT, ห้ามว่าง, จำกัดค่าด้วย CHECK)
---                location, details (TEXT, ห้ามว่าง)
---                priority (ค่าเริ่มต้น 'normal', จำกัดด้วย CHECK)
---                status (ค่าเริ่มต้น 'pending', จำกัดด้วย CHECK)
---                created_at (ค่าเริ่มต้นเป็นเวลาปัจจุบัน)
---
---         ⚠ อย่าลืม FOREIGN KEY — เป็นหัวใจของสัปดาห์นี้
 CREATE TABLE requests (
   id            TEXT PRIMARY KEY,
   requester_id  INTEGER NOT NULL,
@@ -52,17 +35,21 @@ CREATE TABLE requests (
   FOREIGN KEY (requester_id) REFERENCES users(id)
 );
 
--- TODO ④  ใส่ข้อมูลตั้งต้น
---         users อย่างน้อย 4 คน · requests อย่างน้อย 5 รายการ
 INSERT INTO users (name, department, email) VALUES
-  ('สมชาย ใจดี',      'วิศวกรรมซอฟต์แวร์', 'somchai@rmutl.ac.th'),
+  ('สมชาย ใจดี', 'วิศวกรรมซอฟต์แวร์', 'somchai@rmutl.ac.th'),
   ('สุภาวดี รักเรียน', 'วิศวกรรมซอฟต์แวร์', 'supawadee@rmutl.ac.th'),
-  ('ธนกฤต ตั้งใจ',     'วิศวกรรมไฟฟ้า',     'thanakrit@rmutl.ac.th'),
-  ('ปรียา ขยันยิ่ง',   'สำนักวิทยบริการ',   'preeya@rmutl.ac.th');
+  ('ธนกฤต ตั้งใจ', 'วิศวกรรมไฟฟ้า', 'thanakrit@rmutl.ac.th'),
+  ('ปรียา ขยันยิ่ง', 'สำนักวิทยบริการ', 'preeya@rmutl.ac.th'),
+  ('พี ซอยตัน', 'วิศวกรรมไฟฟ้า', 'pee@rmutl.ac.th'),
+  ('ติก วัดเจด', 'วิศวกรรมซอฟต์แวร์', 'tick@rmutl.ac.th'),
+  ('ฟุก จอก', 'วิศวกรรมซอฟต์แวร์', 'fluce@rmutl.ac.th');
 
   INSERT INTO requests (id, requester_id, request_type, location, details, priority, status) VALUES
-  ('REQ-001', 1, 'แจ้งซ่อม',          'ห้องปฏิบัติการ 301', 'เครื่องปรับอากาศไม่ทำงานตั้งแต่เช้า', 'urgent', 'pending'),
-  ('REQ-002', 2, 'บริการบัญชีผู้ใช้', 'อาคารวิศวกรรม',      'เข้าสู่ระบบห้องปฏิบัติการไม่ได้',     'normal', 'in-progress'),
-  ('REQ-003', 3, 'ขอใช้อุปกรณ์',      'ห้องประชุม 2',        'ขอยืมโปรเจกเตอร์',                 'normal', 'completed'),
-  ('REQ-004', 1, 'แจ้งซ่อม',          'ห้องปฏิบัติการ 302', 'คอมพิวเตอร์เครื่องที่ 5 เปิดไม่ติด', 'urgent', 'pending'),
-  ('REQ-005', 4, 'อื่น ๆ',             'ห้องสมุด ชั้น 2',     'ขอเพิ่มปลั๊กไฟบริเวณโต๊ะอ่านหนังสือ', 'normal', 'pending');
+  ('REQ-001', 1, 'แจ้งซ่อม', 'ห้องปฏิบัติการ 301', 'เครื่องปรับอากาศไม่ทำงานตั้งแต่เช้า', 'urgent', 'pending'),
+  ('REQ-002', 2, 'บริการบัญชีผู้ใช้', 'อาคารวิศวกรรม',      'เข้าสู่ระบบห้องปฏิบัติการไม่ได้', 'normal', 'in-progress'),
+  ('REQ-003', 3, 'ขอใช้อุปกรณ์', 'ห้องประชุม 2',        'ขอยืมโปรเจกเตอร์', 'normal', 'completed'),
+  ('REQ-004', 4, 'แจ้งซ่อม', 'ห้องปฏิบัติการ 302', 'คอมพิวเตอร์เครื่องที่ 5 เปิดไม่ติด', 'urgent', 'pending'),
+  ('REQ-005', 5, 'แจ้งซ่อม', 'ห้องสมุด ชั้น 2',     'ขอเพิ่มปลั๊กไฟบริเวณโต๊ะอ่านหนังสือ', 'normal', 'pending'),
+  ('REQ-006', 6, 'ขอใช้อุปกรณ์', 'ห้องประชุม 3',        'ขอยืมไมโครโฟน', 'urgent', 'in-progress'),
+  ('REQ-007', 7, 'บริการบัญชีผู้ใช้', 'อาคารวิศวกรรม',      'ลืมรหัสผ่านเข้าสู่ระบบ', 'normal', 'completed'),
+  ('REQ-008', 1, 'แจ้งซ่อม', 'ห้องปฏิบัติการ 301', 'เครื่องพิมพ์ไม่ทำงาน', 'normal', 'pending');
