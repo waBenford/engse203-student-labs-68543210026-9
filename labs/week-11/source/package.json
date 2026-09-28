@@ -6,7 +6,9 @@
     "node": ">=22.13.0"
   },
   "scripts": {
-    "check": "node --disable-warning=ExperimentalWarning check-week11.mjs"
+    "check": "node --disable-warning=ExperimentalWarning check-week11.mjs",
+    "build": "cd frontend && npm install && npm run build",
+    "start": "node api/src/server.js"
   },
   "devDependencies": {
     "supertest": "^7.2.2"
