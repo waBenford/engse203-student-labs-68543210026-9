@@ -7,8 +7,8 @@
   },
   "scripts": {
     "check": "node --disable-warning=ExperimentalWarning check-week11.mjs",
-    "build": "cd api && npm install && cd ../frontend && npm install --include=dev && npm run build",
-    "start": "node api/src/server.js"
+    "build": "npm install --include=dev --prefix frontend && npm run build --prefix frontend && npm install --prefix api",
+    "start": "npm start --prefix api"
   },
   "devDependencies": {
     "supertest": "^7.2.2"
