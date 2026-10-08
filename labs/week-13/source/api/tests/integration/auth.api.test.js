@@ -3,7 +3,11 @@ import request from 'supertest';
 import { createApp } from '../../src/app.js';
 import { loadSeed } from '../../src/services/requestService.js';
 import { STAFF, loginAsStaff, tokenFor } from '../helpers/auth.js';
+import { resetLoginLimiter } from '../../src/routes/authRoutes.js';
 
+beforeEach(() => {
+  resetLoginLimiter();
+});
 /**
  * Week 13 — เข้าสู่ระบบและสิทธิ์
  * test 3 ข้อแรกให้มาแล้ว — จะ fail จนกว่าจะทำ CP50–CP51 เสร็จ (เขียน test ก่อน แล้วทำให้ผ่าน)
@@ -44,4 +48,33 @@ describe('สิทธิ์ของ PUT / DELETE', () => {
   //   - เจ้าหน้าที่ → PUT 200 และ DELETE 204  ใช้ await loginAsStaff(app)
   //   ⚠ หลังผูก authenticate แล้ว test ของ PUT/DELETE ใน requests.api.test.js จะพัง (401)
   //     — นั่นคือสัญญาณว่า requirement เปลี่ยน: แก้ test ให้เข้าสู่ระบบก่อน
+    const put = () => request(app).put('/api/requests/REQ-001').send({ status: 'completed' });
+
+    test('token ที่เซ็นด้วย secret อื่น (ปลอม) → 401', async () => {
+      const r = await put().set('Authorization', `Bearer ${tokenFor('staff', 'not-the-real-secret')}`);
+      expect(r.status).toBe(401);
+    });
+
+    test('token ถูกต้องแต่ไม่ใช่เจ้าหน้าที่ → 403', async () => {
+      const r = await put().set('Authorization', `Bearer ${tokenFor('requester')}`);
+      expect(r.status).toBe(403);
+    });
+
+    test('เจ้าหน้าที่ → PUT 200 และ DELETE 204', async () => {
+      const auth = `Bearer ${await loginAsStaff(app)}`;
+      await put().set('Authorization', auth).expect(200);
+      await request(app).delete('/api/requests/REQ-002').set('Authorization', auth).expect(204);
+    });
+
+    test('ส่งคำร้อง (POST) และดูรายการ (GET) ยังไม่ต้องเข้าสู่ระบบ', async () => {
+      await request(app).get('/api/requests').expect(200);
+      await request(app).post('/api/requests').send({
+        requesterName: 'นักศึกษา ทั่วไป',
+        requestType: 'แจ้งซ่อม',
+        location: 'ห้อง 205',
+        details: 'ไฟห้องเรียนดับสองดวง',
+        priority: 'normal',
+      }).expect(201);
+    });
 });
+
