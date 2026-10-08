@@ -169,14 +169,14 @@
     "url": "https://campus-service-lab12-68543210026-9.onrender.com",
     "liveUrl": "https://campus-service-lab12-68543210026-9.onrender.com/",
     "notes": "ทำครบแล้วครับ",
-    "pageUrl": "https://waBenford.github.io/engse203-student-labs-68543210026/labs/week-12/",
+    "pageUrl": "https://campus-service-lab12-68543210026-9.onrender.com/",
     "sourceUrl": "https://github.com/waBenford/engse203-student-labs-68543210026/tree/lab/week-12/labs/week-12/source",
     "hasPublish": true,
     "sourceEntries": 18
   },
   {
     "week": "week-13",
-    "title": "fullstack-integration",
+    "title": "quality-security",
     "status": "ready",
     "sourceOrigin": "starter week-13",
     "originalRepoUrl": "https://github.com/waBenford/engse203-student-labs-68543210026-9",
@@ -187,7 +187,7 @@
     "notes": "ทำครบแล้วครับ",
     "pageUrl": "https://waBenford.github.io/engse203-student-labs-68543210026/labs/week-13/",
     "sourceUrl": "https://github.com/waBenford/engse203-student-labs-68543210026/tree/lab/week-13/labs/week-13/source",
-    "hasPublish": false,
-    "sourceEntries": 2
+    "hasPublish": true,
+    "sourceEntries": 19
   }
 ]
